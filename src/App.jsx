@@ -80,6 +80,12 @@ const [categories, setCategories] = useState([]);
         );
   }
 
+
+  const deleteCategory = (e) => {
+    axios.delete("/api/categories/"+e.target.value).then( 
+      console.log('success') 
+      );
+}
 useEffect(() => {
   axios.get("/api/products?populate=*").then((res) => {
     setProducts(res.data.data);
@@ -111,7 +117,17 @@ return (
             <p>{p.title}</p>
             <p>{p.price}</p>
             <button value={p.id} onClick={deleteProduct}>delete</button>
+          </div>
+        )
+      })
+    }
 
+    {
+      categories.map(c => {
+        return(
+          <div key={c.id}>
+            <p>{c.title}</p>
+            <button value={c.id} onClick={deleteCategory}>delete</button>
           </div>
         )
       })
